@@ -9,7 +9,6 @@
 ##     ## ##     ##  ######  ##     ## ##     ## ##     ##  ######     ##    ######## ##     ##
 
 hashmaster.sh is a Bash file that will determaine if a file you downloaded has kept its integrity by compairing two SHA 256 hashes to determine if they are the same. 
-![hashmaster01](https://gist.github.com/user-attachments/assets/d9deca29-751d-4204-a1e2-c904c324401d)
 One being copied from the website and the other from the downlaoded file.
 When you run this script it will ask you to paste the first checksum( you will need to copy a chechsum from the website you are downloading the file from)
 This Program assumes a few things:
