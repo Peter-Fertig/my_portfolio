@@ -1,0 +1,98 @@
+Sure, let's add a special note to remind ourselves to check these vulnerabilities:
+
+### Network Security Report for IP Address 192.168.12.130
+
+#### 1. Introduction
+- **Objective**: To assess the security posture of the IP address 192.168.12.130.
+- **Tools Used**: Nikto
+
+#### 2. Summary of Findings
+- **Total Ports Scanned**: Port 80 (HTTP)
+- **Open Ports**: 80
+- **Server Information**: Apache/1.3.20 (Unix) mod_ssl/2.8.4 OpenSSL/0.9.6b
+- **Scan Start Time**: 2024-11-24 13:56:00 (GMT-5)
+- **Scan End Time**: 2024-11-24 13:56:29 (GMT-5)
+
+#### 3. Detailed Scan Results
+- **Port 80 (HTTP)**: Open
+  - **Server**: Apache/1.3.20 (Unix) mod_ssl/2.8.4 OpenSSL/0.9.6b
+  - **Potential Vulnerabilities**:
+    - Server may leak inodes via ETags (CVE-2003-1418)
+    - The anti-clickjacking X-Frame-Options header is not present
+    - The X-Content-Type-Options header is not set
+    - Apache is vulnerable to XSS via the Expect header (CVE-2006-3918)
+    - Outdated Apache version (current is at least Apache/2.4.54), EOL for 2.x branch is Apache 2.2.34
+    - Outdated OpenSSL version (current is at least 3.0.7, OpenSSL 1.1.1s is current for 1.x branch until Nov 11 2023)
+    - Outdated mod_ssl version (current is at least 2.9.6)
+    - Remote DoS and possible code execution vulnerabilities in Apache 1.x up to 1.2.34
+    - Local buffer overflow vulnerabilities in Apache 1.3 below 1.3.27
+    - Overflows in mod_rewrite and mod_cgi in Apache 1.3 below 1.3.29
+    - **Remote buffer overflow in mod_ssl/2.8.4 - mod_ssl 2.8.7 and lower, which may allow a remote shell**
+    - Allowed HTTP Methods: GET, HEAD, OPTIONS, TRACE
+    - HTTP TRACE method active, vulnerable to XST
+    - **Server allows reading of any system file by adding an extra '/' to the URL**
+    - **Webalizer may be installed (versions lower than 2.01-09 vulnerable to Cross Site Scripting (XSS), CVE-2001-0835)**
+    - **Directory indexing found (/manual/)**
+    - **Web server manual found (/manual/)**
+    - **Directory indexing found (/icons/)**
+    - **Apache default file found (/icons/README)**
+    - **This might be interesting (/test.php)**
+
+#### 4. Recommendations
+- **Update Services**: Ensure all services are running the latest versions.
+- **Disable Outdated Protocols**: Disable support for outdated protocols (e.g., SSLv2).
+- **Vulnerability Patching**: Regularly apply security patches to mitigate known vulnerabilities, especially addressing the **remote buffer overflow in mod_ssl/2.8.4 - mod_ssl 2.8.7 and lower, which may allow a remote shell**.
+- **SSL Configuration**: Update and secure SSL/TLS configurations to prevent exposure to known vulnerabilities.
+- **Server Hardening**: Apply hardening measures such as removing unnecessary services, securing configurations, and disabling risky HTTP methods (e.g., TRACE).
+- **Fix Headers**: Implement security headers such as X-Frame-Options and X-Content-Type-Options to mitigate clickjacking and MIME type vulnerabilities.
+- **Restrict Access**: Implement access controls to restrict reading of sensitive system files.
+- **Special Note**: Check the following vulnerabilities:
+  - Server allows reading of any system file by adding an extra '/' to the URL.
+  - Webalizer may be installed (versions lower than 2.01-09 vulnerable to XSS, CVE-2001-0835).
+  - Directory indexing found (/manual/).
+  - Web server manual found (/manual/).
+  - Directory indexing found (/icons/).
+  - Apache default file found (/icons/README).
+  - Potentially interesting file (/test.php).
+
+#### 5. Conclusion
+- The network security assessment for IP address 192.168.12.130 revealed several outdated services and protocols with potential vulnerabilities. Immediate actions include updating all services, disabling outdated protocols, addressing the remote buffer overflow vulnerability in mod_ssl, enhancing SSL/TLS configurations, and applying strict server hardening measures.
+
+#### 6. Appendix
+- **Nikto Scan Command Used**: `nikto -h http://192.168.12.130`
+- **Raw Nikto Output**:
+```
+- Nikto v2.5.0
+---------------------------------------------------------------------------
++ Target IP:          192.168.12.130
++ Target Hostname:    192.168.12.130
++ Target Port:        80
++ Start Time:         2024-11-24 13:56:00 (GMT-5)
+---------------------------------------------------------------------------
++ Server: Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b
++ /: Server may leak inodes via ETags, header found with file /, inode: 34821, size: 2890, mtime: Wed Sep  5 23:12:46 2001. See: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-1418
++ /: The anti-clickjacking X-Frame-Options header is not present. See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
++ /: The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type. See: https://www.netsparker.com/web-vulnerability-scanner/vulnerabilities/missing-content-type-header/
++ /: Apache is vulnerable to XSS via the Expect header. See: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3918
++ Apache/1.3.20 appears to be outdated (current is at least Apache/2.4.54). Apache 2.2.34 is the EOL for the 2.x branch.
++ OpenSSL/0.9.6b appears to be outdated (current is at least 3.0.7). OpenSSL 1.1.1s is current for the 1.x branch and will be supported until Nov 11 2023.
++ mod_ssl/2.8.4 appears to be outdated (current is at least 2.9.6) (may depend on server version).
++ Apache/1.3.20 - Apache 1.x up 1.2.34 are vulnerable to a remote DoS and possible code execution.
++ Apache/1.3.20 - Apache 1.3 below 1.3.27 are vulnerable to a local buffer overflow which allows attackers to kill any process on the system.
++ Apache/1.3.20 - Apache 1.3 below 1.3.29 are vulnerable to overflows in mod_rewrite and mod_cgi.
++ **mod_ssl/2.8.4 - mod_ssl 2.8.7 and lower are vulnerable to a remote buffer overflow which may allow a remote shell.**
++ OPTIONS: Allowed HTTP Methods: GET, HEAD, OPTIONS, TRACE .
++ /: HTTP TRACE method is active which suggests the host is vulnerable to XST. See: https://owasp.org/www-community/attacks/Cross_Site_Tracing
++ **///etc/hosts: The server install allows reading of any system file by adding an extra '/' to the URL.**
++ **/usage/: Webalizer may be installed. Versions lower than 2.01-09 vulnerable to Cross Site Scripting (XSS). See: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2001-0835**
++ **/manual/: Directory indexing found.**
++ **/manual/: Web server manual found.**
++ **/icons/: Directory indexing found.**
++ **/icons/README: Apache default file found. See: https://www.vntweb.co.uk/apache-restricting-access-to-iconsreadme/**
++ **/test.php: This might be interesting.**
++ /wp-content/themes/twentyeleven/images/headers/server.php?filesrc=/etc/hosts: A PHP backdoor file manager was found.
++ /wordpress/wp-content/themes/twentyeleven/images/headers/server.php?filesrc=/etc/hosts: A PHP backdoor file manager was found.
++ /wp-includes/Requests/Utility/content-post.php?filesrc=/etc/hosts: A PHP backdoor file manager was found.
++ /wordpress/wp-includes/Requests/Utility/content-post.php?filesrc=/etc/hosts: A PHP backdoor file manager was found.
++ /wp-includes/js/tinymce/themes/modern/Meuhy.php?filesrc=/etc/hosts: A PHP backdoor file manager was found.
++ /wordpress/wp-includes/js/tin
