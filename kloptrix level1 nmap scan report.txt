@@ -1,0 +1,118 @@
+
+
+### Network Security Report for IP Address 192.168.12.130
+
+#### 1. Introduction
+- **Objective**: To assess the security posture of the IP address 192.168.12.130.
+- **Tools Used**: nmap, Firefox
+
+#### 2. Summary of Findings
+- **Total Ports Scanned**: All ports
+- **Open Ports**: 22, 80, 111, 139, 443, 32768
+- **Closed/Filtered Ports**: 65529 ports
+
+#### 3. Detailed Scan Results
+- **Port 22 (SSH)**: Open
+  - **Service**: OpenSSH 2.9p2 (protocol 1.99)
+  - **Details**: Server supports SSHv1
+  - **Potential Vulnerabilities**: Weak encryption protocols, outdated SSH version
+- **Port 80 (HTTP)**: Open
+  - **Service**: Apache httpd 1.3.20 (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b
+  - **Details**: Default Apache webpage found using Firefox. Encountered a 404 Not Found error when clicking on a link.
+  - **Potential Vulnerabilities**: Outdated Apache version, outdated OpenSSL version, broken links
+  - **Information Disclosure**: Sensitive information exposed via the default webpage, including a possible naming convention from their server name `kioptrix.level1`.
+- **Port 111 (RPC)**: Open
+  - **Service**: rpcbind 2 (RPC #100000)
+  - **Details**: Provides RPC services
+  - **Potential Vulnerabilities**: RPC service vulnerabilities, potential misconfigurations
+- **Port 139 (NetBIOS-SSN)**: Open
+  - **Service**: Samba smbd (workgroup: MYGROUP)
+  - **Details**: Provides NetBIOS/SMB services
+  - **Potential Vulnerabilities**: Potential SMB vulnerabilities, outdated Samba version
+- **Port 443 (HTTPS)**: Open
+  - **Service**: Apache/1.3.20 (Unix) mod_ssl/2.8.4 OpenSSL/0.9.6b
+  - **Details**: SSL certificate expired (2009-09-26 to 2010-09-26), supports SSLv2
+  - **Potential Vulnerabilities**: Outdated Apache version, outdated OpenSSL version, SSLv2 vulnerabilities
+- **Port 32768 (RPC)**: Open
+  - **Service**: status 1 (RPC #100024)
+  - **Details**: Provides status RPC services
+  - **Potential Vulnerabilities**: RPC service vulnerabilities, potential misconfigurations
+
+#### 4. Recommendations
+- **Update Services**: Ensure all services are running the latest versions.
+- **Disable Outdated Protocols**: Disable support for SSHv1 and SSLv2.
+- **Firewall Rules**: Restrict access to sensitive services (e.g., SSH, SMB) to specific IP addresses.
+- **Vulnerability Patching**: Regularly apply security patches to mitigate known vulnerabilities.
+- **Review and Configure RPC Services**: Secure and configure RPC services appropriately.
+- **Fix Broken Links**: Review the default Apache webpage for broken links and update or remove them.
+- **Information Disclosure Mitigation**: Ensure that no sensitive information is exposed on default webpages and properly configure web servers to limit disclosure of information.
+
+#### 5. Conclusion
+- The network security assessment for IP address 192.168.12.130 revealed several outdated services and protocols with potential vulnerabilities. Immediate actions include updating all services, disabling outdated protocols, fixing broken links, mitigating information disclosure, and applying strict firewall rules to enhance security.
+
+#### 6. Appendix
+- **nmap Scan Command Used**: `nmap -T4 -p- -A 192.168.12.130`
+- **Raw nmap Output**:
+```
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-11-24 12:20 EST
+Nmap scan report for 192.168.12.130
+Host is up (0.00028s latency).
+Not shown: 65529 closed tcp ports (reset)
+PORT      STATE SERVICE     VERSION
+22/tcp    open  ssh         OpenSSH 2.9p2 (protocol 1.99)
+| ssh-hostkey: 
+|   1024 b8:74:6c:db:fd:8b:e6:66:e9:2a:2b:df:5e:6f:64:86 (RSA1)
+|   1024 8f:8e:5b:81:ed:21:ab:c1:80:e1:57:a3:3c:85:c4:71 (DSA)
+|_  1024 ed:4e:a9:4a:06:14:ff:15:14:ce:da:3a:80:db:e2:81 (RSA)
+|_sshv1: Server supports SSHv1
+80/tcp    open  http        Apache httpd 1.3.20 ((Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b)
+|_http-title: Test Page for the Apache Web Server on Red Hat Linux
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b
+111/tcp   open  rpcbind     2 (RPC #100000)
+| rpcinfo: 
+|   program version    port/proto  service
+|   100000  2            111/tcp   rpcbind
+|   100000  2            111/udp   rpcbind
+|   100024  1          32768/tcp   status
+|_  100024  1          32768/udp   status
+139/tcp   open  netbios-ssn Samba smbd (workgroup: MYGROUP)
+443/tcp   open  ssl/https   Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b
+|_http-title: 400 Bad Request
+|_http-server-header: Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b
+| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=SomeOrganization/stateOrProvinceName=SomeState/countryName=--
+| Not valid before: 2009-09-26T09:32:06
+|_Not valid after:  2010-09-26T09:32:06
+|_ssl-date: 2024-11-24T16:20:57+00:00; -59m55s from scanner time.
+| sslv2: 
+|   SSLv2 supported
+|   ciphers: 
+|     SSL2_RC4_128_EXPORT40_WITH_MD5
+|     SSL2_RC4_64_WITH_MD5
+|     SSL2_DES_64_CBC_WITH_MD5
+|     SSL2_RC2_128_CBC_EXPORT40_WITH_MD5
+|     SSL2_RC4_128_WITH_MD5
+|     SSL2_DES_192_EDE3_CBC_WITH_MD5
+|_    SSL2_RC2_128_CBC_WITH_MD5
+32768/tcp open  status      1 (RPC #100024)
+MAC Address: 00:0C:29:54:73:E9 (VMware)
+Device type: general purpose
+Running: Linux 2.4.X
+OS CPE: cpe:/o:linux:linux_kernel:2.4
+OS details: Linux 2.4.9 - 2.4.18 (likely embedded)
+Network Distance: 1 hop
+
+Host script results:
+|_smb2-time: Protocol negotiation failed (SMB2)
+|_nbstat: NetBIOS name: KIOPTRIX, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)
+|_clock-skew: -59m55s
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.28 ms 192.168.12.130
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 22.42 seconds
+```
+
