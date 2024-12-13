@@ -1,7 +1,7 @@
 <h1>Hi, My name is Peter Fertig</h1>
 I am a veteran of the U.S. ⚓
 
-I've Attened College to obtain my A.S in computer science as well as obtain several IT certifications.📜
+I've Attended College to obtain my A.S in computer science as well as obtain several IT certifications.📜
 
 Experienced in customer and support security concepts. Excitedly seeking an Information Technology role that allows for a collaboration of my qualications with an opportunity for experience, knowledge and growth opportunities.
 
