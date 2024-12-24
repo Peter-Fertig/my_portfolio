@@ -15,3 +15,4 @@ This Program assumes a few things:
 1. You are using a common linux Distro with bash installed.
 2. You saved the file you want to check in your "Downloads" folder(as in /home/user_name/Downloads/foo.bar)
 3. you know how to make a program bash file executable in linux.
+Note: Kali Linux is wierd, so I made a seperate hashmaster_Kali file for that.
