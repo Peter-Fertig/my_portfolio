@@ -1,5 +1,3 @@
-Sure, let's add a special note to remind ourselves to check these vulnerabilities:
-
 ### Network Security Report for IP Address 192.168.12.130
 
 #### 1. Introduction
