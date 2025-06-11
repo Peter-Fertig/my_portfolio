@@ -1,5 +1,5 @@
 #!/bin/bash
-#clean up files for re-use
+#this is a script that will compare a SHA 256 file hash to a file in your downloads folder. and it will tell you if the two hashes match.
 #set text color variables
 RED='\033[0;31m'
 GRN='\033[0;32m'
