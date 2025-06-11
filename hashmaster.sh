@@ -1,7 +1,5 @@
 #!/bin/bash
 #clean up files for re-use
-rm download_list1.txt 2>/dev/null
-rm download_list2.txt 2>/dev/null
 #set text color variables
 RED='\033[0;31m'
 GRN='\033[0;32m'
@@ -28,26 +26,27 @@ read sum1
 
 dl_directory="/home/$user_name/Downloads"
 
-ls $dl_directory -1 >> download_list1.txt
+array=$(ls /home/$user_name/Downloads)
 
-awk '{print NR,$0}' download_list1.txt > download_list2.txt
 
-cat download_list2.txt
 
-echo -n "Choose the file you would like to check by typing in the corresponding number:  "
+PS3='Choose the file you would like to check by typing in the corresponding number:  '
 
-read selection
-# set var as selection from list 
-var=( $(ls $dl_directory) ) 
-check=${var[$selection-1]}
+select afile in $array
+
+do
+	echo "you slected $afile"
+        check=$afile
+	break
+done
+
 echo ""
-echo -e "${MAG}checking file integrity of $check${NC}"
+echo -e "checking file integrity of${MAG} $check${NC}"
 echo ""
 
 #set variable sum2 to --> run shasum on selected file
 
-sum2=$(shasum -a 256 $dl_directory/$check | awk '{print $1}') 
-#echo $sum2 | awk '{print $1}'
+sum2=$(shasum -a 256 $dl_directory/$check | cut -d' ' -f 1) 
 
 
 #check if sum1 and sum2 are equal
